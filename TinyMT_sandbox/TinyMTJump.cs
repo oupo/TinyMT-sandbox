@@ -67,7 +67,7 @@ namespace TinyMT_sandbox
             var tiny2 = new TinyMT(status, param);
             Jump(tiny2, 10000, 0, poly);
             Console.WriteLine("{0:X08} {1:X08} {2:X08} {3:X08}",
-                                  tiny.status[0], tiny.status[1], tiny.status[2], tiny.status[3]);
+                                  tiny2.status[0], tiny2.status[1], tiny2.status[2], tiny2.status[3]);
         }
     }
 
