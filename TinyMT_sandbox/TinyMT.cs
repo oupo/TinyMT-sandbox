@@ -54,6 +54,6 @@ namespace TinyMT_sandbox
         private static readonly int TINYMT32_SH8 = 8;
 
         public uint[] status { get; set; }
-        private TinyMTParameter param;
+        public TinyMTParameter param { get; }
     }
 }
