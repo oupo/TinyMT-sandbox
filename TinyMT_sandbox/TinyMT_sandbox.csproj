@@ -29,7 +29,7 @@
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>TinyMT_sandbox.TinyMTJump</StartupObject>
+    <StartupObject>TinyMT_sandbox.MainClass</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
