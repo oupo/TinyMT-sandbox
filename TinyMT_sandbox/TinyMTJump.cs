@@ -64,7 +64,8 @@ namespace TinyMT_sandbox
                                   tiny.status[0], tiny.status[1], tiny.status[2], tiny.status[3]);
 
             var tiny2 = new TinyMT(status, param);
-            F2Polynomial poly = new F2Polynomial(new ulong[2] { 0xf8d2e95d70e48af5, 0x19be1fb458012ef9 });
+            //F2Polynomial poly = new F2Polynomial(new ulong[2] { 0xf8d2e95d70e48af5, 0x19be1fb458012ef9 });
+            var poly = F2Polynomial.StrToPolynomial("19be1fb458012ef9f8d2e95d70e48af5");
             JumpByPolynomial(tiny2, poly);
             Console.WriteLine("{0:X08} {1:X08} {2:X08} {3:X08}",
                                   tiny.status[0], tiny.status[1], tiny.status[2], tiny.status[3]);
@@ -80,5 +81,30 @@ namespace TinyMT_sandbox
             this.ar[1] = ar[1];
         }
         public ulong[] ar;
+
+        public static F2Polynomial StrToPolynomial(string str)
+        {
+            ulong ar0 = Convert.ToUInt64(str.Substring(16, 16), 16);
+            ulong ar1 = Convert.ToUInt64(str.Substring(0, 16), 16);
+            return new F2Polynomial(new ulong[2] { ar0, ar1 });
+        }
+
+        public override string ToString()
+        {
+            return string.Format("{0:X016}{1:X016}", ar[0], ar[1]);
+        }
+
+        public static F2Polynomial CalculateJumpPolynomial(ulong lower_step, ulong upper_step, string poly_str)
+        {
+            F2Polynomial characteristic = StrToPolynomial(poly_str);
+            F2Polynomial tee = new F2Polynomial(new ulong[2] { 2, 0 });
+            return tee.PowerMod(lower_step, upper_step, characteristic);
+        }
+
+        public F2Polynomial PowerMod(ulong lower_step, ulong upper_step, F2Polynomial mod)
+        {
+            // TODO
+            return null;
+        }
     }
 }
