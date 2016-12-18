@@ -10,8 +10,19 @@ namespace TinyMT_sandbox
     {
         public static void Jump(TinyMT tiny, ulong lower_step, ulong upper_step, string poly_str)
         {
+            if (lower_step == 0 && upper_step == 0) return;
+            if (lower_step > 0)
+            {
+                lower_step -= 1;
+            }
+            else
+            {
+                lower_step = unchecked((ulong)(-1L));
+                upper_step -= 1;
+            }
             F2Polynomial jump_poly = F2Polynomial.CalculateJumpPolynomial(lower_step, upper_step, poly_str);
             JumpByPolynomial(tiny, jump_poly);
+            tiny.nextState();
         }
 
         private static void Add(TinyMT dest, TinyMT src)
