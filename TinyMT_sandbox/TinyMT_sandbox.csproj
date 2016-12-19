@@ -40,6 +40,7 @@
     <Compile Include="TinyMT.cs" />
     <Compile Include="TinyMTJump.cs" />
     <Compile Include="TinyMTParameter.cs" />
+    <Compile Include="F2Polynomial.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
