@@ -48,6 +48,57 @@ namespace TinyMT_sandbox
             return t0;
         }
 
+        public void jumpState(ulong lower_step, ulong upper_step, string poly_str)
+        {
+            if (lower_step == 0 && upper_step == 0) return;
+            if (lower_step > 0)
+            {
+                lower_step -= 1;
+            }
+            else
+            {
+                lower_step = unchecked((ulong)(-1L));
+                upper_step -= 1;
+            }
+            F2Polynomial jump_poly = F2Polynomial.CalculateJumpPolynomial(lower_step, upper_step, poly_str);
+            jumpByPolynomial(jump_poly);
+            nextState();
+        }
+
+        public void jumpByPolynomial(F2Polynomial jump_poly)
+        {
+            var work = new TinyMT(new uint[4] { 0, 0, 0, 0 }, param);
+            ulong x64 = jump_poly.ar[0];
+            for (int i = 0; i < 64; i++)
+            {
+                if ((x64 & 1) != 0)
+                {
+                    Add(work, this);
+                }
+                nextState();
+                x64 = x64 >> 1;
+            }
+            x64 = jump_poly.ar[1];
+            while (x64 != 0)
+            {
+                if ((x64 & 1) != 0)
+                {
+                    Add(work, this);
+                }
+                nextState();
+                x64 = x64 >> 1;
+            }
+            work.status.CopyTo(this.status, 0);
+        }
+
+        private static void Add(TinyMT dest, TinyMT src)
+        {
+            dest.status[0] ^= src.status[0];
+            dest.status[1] ^= src.status[1];
+            dest.status[2] ^= src.status[2];
+            dest.status[3] ^= src.status[3];
+        }
+
         private static readonly uint TINYMT32_MASK = 0x7FFFFFFF;
         private static readonly int TINYMT32_SH0 = 1;
         private static readonly int TINYMT32_SH1 = 10;
